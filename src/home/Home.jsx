@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
+import "./home.css"
 import { userActions } from '_store';
+import { Link } from 'react-router-dom';
 
 export { Home };
 
@@ -29,7 +30,11 @@ function Home() {
                 </ul>
             }
             {users.loading && <div className="spinner-border spinner-border-sm"></div>}
-            {users.error && <div className="text-danger">Error loading users: {users.error.message}</div>}
+            
+            <div>
+                <Link to="/cards" ><button className="showCard">Show All Cards</button></Link>
+                
+            </div>
         </div>
     );
 }

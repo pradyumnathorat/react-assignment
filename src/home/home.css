@@ -1,0 +1,13 @@
+.showCard {
+    margin-top:1rem;
+    padding : 1rem;
+    border-radius: 0.5rem;
+    color : white;
+    font-weight : bold;
+    background-color: rgb(92, 176, 92);
+    border:  none;
+}
+
+.showCard:hover {
+    background-color: rgb(143, 195, 38);
+}

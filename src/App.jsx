@@ -4,6 +4,8 @@ import { history } from '_helpers';
 import { Nav, PrivateRoute } from '_components';
 import { Home } from 'home';
 import { Login } from 'login';
+import CreateCard from '_components/createCard/CreateCard';
+import Allcards from '_components/allCards/Allcards';
 
 export { App };
 
@@ -27,7 +29,9 @@ function App() {
                         }
                     />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/cards/new" element={<CreateCard />} />
                     <Route path="*" element={<Navigate to="/" />} />
+                    <Route path="/cards" element={<Allcards/>} />
                 </Routes>
             </div>
         </div>

@@ -39,23 +39,32 @@ function createReducers() {
 }
 
 function createExtraActions() {
-    const baseUrl = `${process.env.REACT_APP_API_URL}/users`;
+    const baseUrl = `${process.env.REACT_APP_API_URL}`;
 
     return {
-        login: login()
-    };    
+        login: login(),
+        createCard: createCard()
+    };
+
+    function createCard() {
+        return createAsyncThunk(
+            `${name}/new`,
+            async ({ name, cardExpiration, cardHolder, cardNumber, category }) => await fetchWrapper.post(`${baseUrl}/cards`, { name, cardExpiration, cardHolder, cardNumber, category })
+        );
+    }
 
     function login() {
         return createAsyncThunk(
             `${name}/login`,
-            async ({ username, password }) => await fetchWrapper.post(`${baseUrl}/authenticate`, { username, password })
+            async ({ username, password }) => await fetchWrapper.post(`${baseUrl}/auth/login`, { email: username, password: password })
         );
     }
 }
 
 function createExtraReducers() {
     return {
-        ...login()
+        ...login(),
+        ...createCard()
     };
 
     function login() {
@@ -66,13 +75,37 @@ function createExtraReducers() {
             },
             [fulfilled]: (state, action) => {
                 const user = action.payload;
-                
+
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
                 state.user = user;
 
                 // get return url from location state or default to home page
                 const { from } = history.location.state || { from: { pathname: '/' } };
+                history.navigate(from);
+            },
+            [rejected]: (state, action) => {
+                state.error = action.error;
+            }
+        };
+    }
+
+    function createCard() {
+        var { pending, fulfilled, rejected } = extraActions.createCard;
+        return {
+            [pending]: (state) => {
+                state.error = null;
+            },
+            [fulfilled]: (state, action) => {
+
+                state.new = action.payload;
+
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
+
+
+
+                // get return url from location state or default to home page
+                const { from } = history.location.state || { from: { pathname: '/cards' } };
                 history.navigate(from);
             },
             [rejected]: (state, action) => {

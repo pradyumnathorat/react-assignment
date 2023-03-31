@@ -1,0 +1,28 @@
+.card-stack {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    max-height: 600px;
+    width: 100%;
+    display: flex;
+    /* justify-content:center; */
+    align-items: center;
+    margin-top: 10px;
+    /* Set a maximum height to enable scrolling */
+}
+
+.card {
+    /* background-color: #fff; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* padding: 20px; */
+    margin-bottom: -50px;
+    transform: translateY(0px);
+    transition: transform 0.3s ease-in-out;
+    width: 290px;
+    border: none;
+    border-radius: 20px;
+}
+
+.card:hover {
+    transform: translateY(-40px);
+}
